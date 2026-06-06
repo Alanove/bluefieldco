@@ -89,6 +89,18 @@ export class SliderService {
   }
 
   /**
+   * Pick a random image path from active slider slides (public URL form).
+   */
+  public getRandomActiveSlideImage(): string {
+    const slides = this.getActiveSlides().filter((slide) => slide.image?.trim());
+    if (slides.length === 0) {
+      return '';
+    }
+    const slide = slides[Math.floor(Math.random() * slides.length)];
+    return this.getImageUrl(slide.image);
+  }
+
+  /**
    * Get slide by ID
    */
   public getSlideById(id: string): Slide | null {

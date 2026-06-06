@@ -122,13 +122,8 @@ app.use((req: Request, res: Response, next: NextFunction) => {
 
   if (req.path !== '/') {
     const pageByUrl = pagesService.getPageByUrl(req.path);
-    if (pageByUrl) {
-      const possibleImages = [
-        (pageByUrl as { pageImage?: string }).pageImage,
-        (pageByUrl as { image?: string }).image
-      ].filter((img): img is string => typeof img === 'string' && img.trim() !== '');
-      (res.locals as any).pageImage = ImageUtils.getPageHeaderImage(possibleImages);
-    }
+    const pageData = pageByUrl || pagesService.getPageData(pageKey);
+    (res.locals as any).pageImage = ImageUtils.getPageHeaderImageFromPage(pageData);
   }
 
   let bodyClass = 'wp-custom-logo hfeed';

@@ -18,8 +18,7 @@ export class PagesController {
     const pageData = pagesService.getPageData('about');
     if (pageData) {
       (res.locals as any).pageContent = pageData.content || '';
-      const aboutImages = [(pageData as any).pageImage, (pageData as any).image]
-        .filter((img: string) => img && img.trim() !== '');
+      const aboutImages = ImageUtils.getPageHeaderSources(pageData as { pageImage?: string; image?: string });
       (res.locals as any).pageImage = ImageUtils.getPageHeaderImage(aboutImages);
       (res.locals as any).pageTitle = pageData.title || 'About EMDC Group';
     }
@@ -49,11 +48,7 @@ export class PagesController {
       const introText = careersPageData?.content || '';
       
       // Get page image with validation
-      const possibleImages = [
-        (careersPageData as any)?.pageImage,
-        (careersPageData as any)?.image
-      ].filter(img => img && img.trim() !== '');
-      
+      const possibleImages = ImageUtils.getPageHeaderSources(careersPageData);
       const pageImage = ImageUtils.getPageHeaderImage(possibleImages);
       
       // Get contact email and careers email from site settings
@@ -200,12 +195,7 @@ export class PagesController {
       (res.locals as any).selected = pageData.key;
       (res.locals as any).pageTitle = pageData.title || pageData.key;
 
-      const possibleImages = [
-        (pageData as any).pageImage,
-        (pageData as any).image
-      ].filter((img: string) => img && img.trim() !== '');
-
-      (res.locals as any).pageImage = ImageUtils.getPageHeaderImage(possibleImages);
+      (res.locals as any).pageImage = ImageUtils.getPageHeaderImageFromPage(pageData);
       (res.locals as any).childPages = [];
       (res.locals as any).isParentPage = false;
 

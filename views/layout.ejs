@@ -28,9 +28,9 @@
   <% const isHomePage = typeof bodyClass !== 'undefined' && bodyClass.includes('home'); %>
   <% if (typeof pageImage !== 'undefined' && pageImage && pageImage.trim() !== '' && !isHomePage) { %>
   <style>
-    .breadcrumb_wrapper,
-    .a-header,
-    .a-headerm {
+    body.page .breadcrumb_wrapper,
+    body.page .a-header,
+    body.page .a-headerm {
       background-image: url('<%= pageImage %>');
       background-size: cover;
       background-repeat: no-repeat;

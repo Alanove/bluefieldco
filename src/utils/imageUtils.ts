@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { SliderService } from '../../admin/services/sliderService';
 import { DEFAULT_PAGE_HEADER_IMAGE } from '../constants/site-images';
 
 export class ImageUtils {
@@ -51,13 +52,42 @@ export class ImageUtils {
   }
 
   /**
-   * Resolve the page header image from uploaded sources, falling back to the site default.
+   * CMS fields used for the hero/header background (excludes SEO social image).
+   */
+  public static getPageHeaderSources(pageData?: { pageImage?: string; image?: string } | null): string[] {
+    if (!pageData) {
+      return [];
+    }
+    return [pageData.pageImage, pageData.image].filter(
+      (img): img is string => typeof img === 'string' && img.trim() !== ''
+    );
+  }
+
+  /**
+   * Resolve hero/header image from CMS page fields, then slider, then site default.
+   */
+  public static getPageHeaderImageFromPage(
+    pageData?: { pageImage?: string; image?: string } | null,
+    publicDir: string = 'public'
+  ): string {
+    return this.getPageHeaderImage(this.getPageHeaderSources(pageData), publicDir);
+  }
+
+  /**
+   * Resolve the page header image from uploaded sources, falling back to a random slider image.
    */
   public static getPageHeaderImage(sources: string[], publicDir: string = 'public'): string {
     const uploaded = this.getBestImage(sources, publicDir);
     if (uploaded) {
       return uploaded;
     }
+
+    const sliderImage = SliderService.getInstance().getRandomActiveSlideImage();
+    const validatedSlider = this.validateImagePath(sliderImage, publicDir);
+    if (validatedSlider) {
+      return validatedSlider;
+    }
+
     return this.validateImagePath(DEFAULT_PAGE_HEADER_IMAGE, publicDir) || DEFAULT_PAGE_HEADER_IMAGE;
   }
 
