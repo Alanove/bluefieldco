@@ -1023,3 +1023,71 @@ body.page .a-headerm {
     grid-template-columns: 1fr;
   }
 }
+
+/* Environmental Sustainability page */
+.es-page .es-section {
+  padding-top: 2.5rem;
+  padding-bottom: 3rem;
+}
+
+.es-content {
+  text-align: left;
+}
+
+.es-title {
+  margin: 0 0 1.25rem;
+  font-size: clamp(1.5rem, 3vw, 2rem) !important;
+  text-transform: uppercase;
+}
+
+.es-icon {
+  margin: 0 0 1.5rem;
+  line-height: 0;
+}
+
+.es-icon img {
+  display: block;
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+
+.es-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+}
+
+.es-item {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 0.85rem;
+  align-items: start;
+  margin-bottom: 1.25rem;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #1a4480;
+}
+
+.es-item:last-child {
+  margin-bottom: 0;
+}
+
+.es-item-icon {
+  width: 48px;
+  height: 48px;
+  line-height: 0;
+}
+
+.es-item-icon img {
+  display: block;
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.es-item > span:last-child {
+  margin-top: 0.65rem;
+}

@@ -23,7 +23,6 @@ export class ImageUtils {
     
     try {
       if (fs.existsSync(fullPath)) {
-        console.log(`Image found: ${normalizedPath}`);
         return normalizedPath;
       } else {
         console.warn(`Image not found: ${normalizedPath} (checked: ${fullPath})`);
